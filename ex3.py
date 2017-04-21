@@ -2,17 +2,16 @@ import zipfile
 import sys
 import re
 
-print sys.argv
-with zipfile.ZipFile(sys.argv[1], "r") as postalzip:
-    filelist = postalzip.namelist()
-    with postalzip.open(filelist[0], "r") as csvfile:
-        alllines = csvfile.readlines()
+with zipfile.ZipFile(sys.argv[1], "r") as postalzip:     # sys.argv has command arguments
+    filelist = postalzip.namelist()                       
+    with postalzip.open(filelist[0], "r") as csvfile:    # open zipfile
+        alllines = csvfile.readlines()                    # read all lines
 # 3 setup
 dic_by_zips = {}
 for l in alllines:
     l = l.strip()
-    zip_code = l.split(",")[0]
-    dic_by_zips[zip_code] = l
+    zip_code = l.split(",")[0]                            # "split" returns list data
+    dic_by_zips[zip_code] = l                             # dictionary key is zip code
 
 # 3
 print dic_by_zips['"6830031"']
@@ -24,6 +23,7 @@ for i in range(9):
         print dic_by_zips[key]
     else:
         print key + " 0 record."
+
 # 5 indexing
 print [ dic_by_zips[key] for key in dic_by_zips.keys() if key[-4:-1] == "128"]
 # 5 regular expression
